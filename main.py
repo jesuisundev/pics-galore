@@ -29,4 +29,4 @@ def _search():
         [type] -- [description]
     """
     result = search.search(dict(request.args))
-    return str(result)
+    return result

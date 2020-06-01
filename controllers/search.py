@@ -6,7 +6,10 @@ Search controller
 - handle actual search
 """
 
-import requests
+import sys 
+sys.path.append('..')
+
+from providers import flickr
 
 def validate_search_query(query_arguments):
     """TODO
@@ -14,7 +17,7 @@ def validate_search_query(query_arguments):
 
     print('Validating search query ...')
 
-    if 'search' not in query_arguments or not query_arguments['search'].isalpha():
+    if 'search' not in query_arguments:
         raise ValueError('Query search is not found in query params')
 
     return True
@@ -45,7 +48,7 @@ def search(query_arguments):
 
 def call(query):
     # TODO
-    r = requests.get('https://www.google.com')
-    print(r.text)
+    print('Call query ...')
+    flickrResponse = flickr.flickr_request(query)
 
-    return r.text
+    return flickrResponse
