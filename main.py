@@ -28,5 +28,5 @@ def _search():
     Returns:
         [type] -- [description]
     """
-    result = search.search(request.args)
+    result = search.search(dict(request.args))
     return str(result)
