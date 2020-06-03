@@ -1,5 +1,5 @@
 from pprint import pprint as pp
-
+import json
 import requests
 
 
@@ -16,27 +16,42 @@ def flickr_request(query):
 
 
 def build_url(query):
-    base_url = 'https://www.flickr.com/services/rest/'
-    service = 'flickr.photos.search'
-    key = ''
-    url = base_url + '?method=' + service + '&api_key=' + key + '&text=' + query + '&safe_search=3&format=json&nojsoncallback=true'
+    with open('./config/config.json') as f:
+        config = json.load(f)
 
-    return url
+    config['providers']['flickr']['query']['text'] = str(query)
+    base_url = config['providers']['flickr']['base_url']
+    query_strings = build_query_strings(config['providers']['flickr']['query'])
+
+    return base_url + query_strings
+
+
+def build_query_strings(config):
+    query_strings = ''
+    first = True
+
+    for key, value in config.items():
+        delimitator = '&'
+
+        if(first):
+            first = False
+            delimitator = '?'
+
+        query_strings += "%s%s=%s" % (delimitator, key, str(value))
+
+    return query_strings
 
 
 def normalize(response):
-    normalize_data = []
+    normalize_data = { 'source': 'Flickr', 'photos': [] }
     raw_data = response.json()
     
     for photo in raw_data['photos']['photo']:
         current_photo = _build_photos_url(photo)
-        normalize_data.append({
+        normalize_data['photos'].append({
             'name': photo['title'],
-            'photos': {
-                "thumbnail": current_photo['thumbnail'],
-                "original": current_photo['original']
-            },
-            'source': 'Flickr'
+            "thumbnail": current_photo['thumbnail'],
+            "original": current_photo['original']
         })
 
     return normalize_data

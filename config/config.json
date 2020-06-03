@@ -1,9 +1,14 @@
 {
-    "providers": [
-        {
-            "name": "google",
-            "available": true,
-            "token": ""
+    "providers": {
+        "flickr": {
+            "base_url": "https://www.flickr.com/services/rest",
+            "query": {
+                "method": "flickr.photos.search",
+                "api_key": "",
+                "safe_search": 3,
+                "format": "json",
+                "nojsoncallback": "true"
+            }
         }
-    ]
+    }
 }
