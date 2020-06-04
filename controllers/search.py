@@ -51,4 +51,14 @@ def call(query):
     print('Call query ...')
     flickrResponse = flickr.flickr_request(query)
 
-    return flickrResponse
+    preview = _preview_html(flickrResponse)
+
+    return preview
+
+
+def _preview_html(response):
+    preview_html = ''
+    for photo in response['photos']:
+        preview_html += '<img src="%s" alt="" />' % photo['original']
+
+    return preview_html
