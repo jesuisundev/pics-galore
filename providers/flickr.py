@@ -1,6 +1,7 @@
 from pprint import pprint as pp
 import json
 import requests
+import os
 
 
 def flickr_request(query):
@@ -19,7 +20,12 @@ def build_url(query):
     with open('./config/config.json') as f:
         config = json.load(f)
 
+    if(not os.environ['FLICKR_API_KEY']):
+        raise ValueError('Environement variable "FLICKR_API_KEY" is empty')
+
     config['providers']['flickr']['query']['text'] = str(query)
+    config['providers']['flickr']['query']['api_key'] = os.environ['FLICKR_API_KEY']
+
     base_url = config['providers']['flickr']['base_url']
     query_strings = build_query_strings(config['providers']['flickr']['query'])
 
