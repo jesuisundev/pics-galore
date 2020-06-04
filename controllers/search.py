@@ -9,7 +9,7 @@ Search controller
 import sys 
 sys.path.append('..')
 
-from providers import flickr
+from providers import flickr, giphy
 
 def validate_search_query(query_arguments):
     """TODO
@@ -49,9 +49,10 @@ def search(query_arguments):
 def call(query):
     # TODO
     print('Call query ...')
-    flickrResponse = flickr.flickr_request(query)
+    flickr_response = flickr.request(query)
+    giphy_response = giphy.request(query)
 
-    preview = _preview_html(flickrResponse)
+    preview = _preview_html(giphy_response)
 
     return preview
 

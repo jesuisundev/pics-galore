@@ -4,9 +4,14 @@
             "base_url": "https://www.flickr.com/services/rest",
             "query": {
                 "method": "flickr.photos.search",
-                "safe_search": 3,
                 "format": "json",
                 "nojsoncallback": "true"
+            }
+        },
+        "giphy": {
+            "base_url": "https://api.giphy.com/v1/gifs/search",
+            "query": {
+                "rating": "r"
             }
         }
     }

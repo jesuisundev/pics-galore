@@ -4,7 +4,7 @@ import requests
 import os
 
 
-def flickr_request(query):
+def request(query):
     pp('Flickr request ...')
 
     url = build_url(query)
