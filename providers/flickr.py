@@ -23,11 +23,13 @@ def build_url(query):
     if(not os.environ['FLICKR_API_KEY']):
         raise ValueError('Environement variable "FLICKR_API_KEY" is empty')
 
-    config['providers']['flickr']['query']['text'] = str(query)
-    config['providers']['flickr']['query']['api_key'] = os.environ['FLICKR_API_KEY']
+    current_provider = [provider for provider in config['providers'] if provider['name'] == 'flickr'][0]
 
-    base_url = config['providers']['flickr']['base_url']
-    query_strings = build_query_strings(config['providers']['flickr']['query'])
+    current_provider['query']['text'] = str(query)
+    current_provider['query']['api_key'] = os.environ['FLICKR_API_KEY']
+
+    base_url = current_provider['base_url']
+    query_strings = build_query_strings(current_provider['query'])
 
     return base_url + query_strings
 

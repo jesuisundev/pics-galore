@@ -6,10 +6,14 @@ Search controller
 - handle actual search
 """
 
-import sys 
+import json
+import sys
 sys.path.append('..')
 
 from providers import flickr, giphy
+
+with open('./config/config.json') as f:
+    config = json.load(f)
 
 def validate_search_query(query_arguments):
     """TODO
@@ -49,10 +53,16 @@ def search(query_arguments):
 def call(query):
     # TODO
     print('Call query ...')
+    response = []
+
     flickr_response = flickr.request(query)
     giphy_response = giphy.request(query)
 
+    response.append(flickr_response)
+    response.append(giphy_response)
+
     preview = _preview_html(giphy_response)
+    preview += _preview_html(flickr_response)
 
     return preview
 

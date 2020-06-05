@@ -1,6 +1,7 @@
 {
-    "providers": {
-        "flickr": {
+    "providers": [
+        {
+            "name": "flickr",
             "base_url": "https://www.flickr.com/services/rest",
             "query": {
                 "method": "flickr.photos.search",
@@ -8,11 +9,12 @@
                 "nojsoncallback": "true"
             }
         },
-        "giphy": {
+        {
+            "name": "giphy",
             "base_url": "https://api.giphy.com/v1/gifs/search",
             "query": {
                 "rating": "r"
             }
         }
-    }
+    ]
 }

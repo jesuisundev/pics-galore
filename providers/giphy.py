@@ -23,11 +23,13 @@ def build_url(query):
     if(not os.environ['GIPHY_API_KEY']):
         raise ValueError('Environement variable "GIPHY_API_KEY" is empty')
     
-    config['providers']['giphy']['query']['q'] = str(query)
-    config['providers']['giphy']['query']['api_key'] = os.environ['GIPHY_API_KEY']
+    current_provider = [provider for provider in config['providers'] if provider['name'] == 'giphy'][0]
 
-    base_url = config['providers']['giphy']['base_url']
-    query_strings = build_query_strings(config['providers']['giphy']['query'])
+    current_provider['query']['a'] = str(query)
+    current_provider['query']['api_key'] = os.environ['GIPHY_API_KEY']
+
+    base_url = current_provider['base_url']
+    query_strings = build_query_strings(current_provider['query'])
 
     return base_url + query_strings
 
@@ -56,7 +58,7 @@ def normalize(response):
         normalize_data['photos'].append({
             'name': photo['title'],
             "thumbnail": photo['images']['fixed_width_small']['url'],
-            "original": photo['images']['original_still']['url']
+            "original": photo['images']['original']['url']
         })
 
     return normalize_data
