@@ -25,7 +25,7 @@ def build_url(query):
     
     current_provider = [provider for provider in config['providers'] if provider['name'] == 'giphy'][0]
 
-    current_provider['query']['a'] = str(query)
+    current_provider['query']['q'] = str(query)
     current_provider['query']['api_key'] = os.environ['GIPHY_API_KEY']
 
     base_url = current_provider['base_url']
