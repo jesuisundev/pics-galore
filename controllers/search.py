@@ -15,6 +15,7 @@ from providers import flickr, giphy
 with open('./config/config.json') as f:
     config = json.load(f)
 
+
 def validate_search_query(query_arguments):
     """TODO
     """
@@ -26,6 +27,7 @@ def validate_search_query(query_arguments):
 
     return True
 
+
 def _get_cache_by_key(key):
     """TODO
 
@@ -34,6 +36,7 @@ def _get_cache_by_key(key):
     """
     print('Get cache by key ...')
     return False
+
 
 def search(query_arguments):
     # TODO
@@ -46,23 +49,21 @@ def search(query_arguments):
         print('Cache hit, return cached data ...')
         result = cached_data
     else:
-        result = call(query_arguments['search'])
+        result = _call(config, query_arguments['search'])
 
     return result
 
-def call(query):
+
+def _call(query, config):
     # TODO
     print('Call query ...')
     response = []
+    preview = ''
 
-    flickr_response = flickr.request(query)
-    giphy_response = giphy.request(query)
-
-    response.append(flickr_response)
-    response.append(giphy_response)
-
-    preview = _preview_html(giphy_response)
-    preview += _preview_html(flickr_response)
+    for provider in flickr.Flickr(query, config), giphy.Giphy(query, config):
+        provider_response = provider.request()
+        response.append(provider_response)
+        preview += _preview_html(provider_response)
 
     return preview
 
