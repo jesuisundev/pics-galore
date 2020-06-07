@@ -1,0 +1,28 @@
+---
+    version: '3.5'
+    
+    x-args:
+      &default-args
+      python_ENV: development
+      NPM_CONFIG_LOGLEVEL: info
+    
+    services:
+      picsgalore:
+        container_name: python_picsgalore
+        image: "picsgalore:dev"
+        build:
+          context: .
+          args:
+            *default-args
+        volumes:
+          - .:/usr/src/app
+        logging:
+          driver: json-file
+          options:
+            max-size: 10m
+            max-file: "2"
+        ports:
+          - "8080:8080"
+        expose:
+          - 8080
+        restart: always
