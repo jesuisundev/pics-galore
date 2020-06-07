@@ -5,4 +5,6 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-CMD ["gunicorn", "-w 4", "main:app"]
+ENTRYPOINT ["python"]
+
+CMD ["main.py"]
