@@ -6,9 +6,11 @@ Define the api and delegate all process to modules
 import json
 import sys
 sys.path.append('controllers/')
+
 from flask import Flask, request
 app = Flask(__name__)
 
+from redis import Redis
 from controllers import search
 
 
