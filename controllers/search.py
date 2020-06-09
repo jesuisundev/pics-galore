@@ -1,11 +1,3 @@
-"""
-Search controller
-
-- validate query
-- handle caching
-- handle actual search
-"""
-
 import json
 import sys
 sys.path.append('..')
@@ -15,13 +7,16 @@ from providers import flickr, giphy
 with open('./config/config.json') as f:
     config = json.load(f)
 
-
 def validate_search_query(query_arguments):
-    """TODO
     """
+    Validating the query params of the serch
 
-    print('Validating search query ...')
+    Args:
+        query_arguments (dict): dictonary of params from the request
 
+    Returns:
+        [boolan]: return true if validated
+    """
     if 'search' not in query_arguments:
         raise ValueError('Query search is not found in query params')
 
@@ -29,17 +24,29 @@ def validate_search_query(query_arguments):
 
 
 def _get_cache_by_key(key):
-    """TODO
-
-    Arguments:
-        key {[type]} -- [description]
     """
-    print('Get cache by key ...')
+    Try to get the cache of this request on Reids
+
+    Args:
+        key (string): key of the cache
+
+    Returns:
+        [dict|boolean]: content of the cache or false
+    """
     return False
 
 
 def search(query_arguments):
-    # TODO
+    """
+    Try to get the cached and return it immedialty
+    If no cache the call process is launch
+
+    Args:
+        query_arguments (dict): dictonary of params from the request
+
+    Returns:
+        [dict]: dictonary of content from the providers
+    """
     result = False
 
     validate_search_query(query_arguments)
@@ -50,13 +57,22 @@ def search(query_arguments):
         result = cached_data
     else:
         result = _call(config, query_arguments['search'])
+        #TODO SET CACHE
 
     return result
 
 
 def _call(query, config):
-    # TODO
-    print('Call query ...')
+    """
+    Go throught each providers and request the content
+
+    Args:
+        query (dict): dictonary of params from the request
+        config (dict): dictonary of configuration
+
+    Returns:
+        [list]: list of dictonary fetched from providers
+    """
     response = []
     preview = ''
 
@@ -69,6 +85,9 @@ def _call(query, config):
 
 
 def _preview_html(response):
+    """
+    Temporary function to transform the list result into html
+    """
     preview_html = ''
     for photo in response['photos']:
         preview_html += '<img src="%s" alt="" />' % photo['original']
