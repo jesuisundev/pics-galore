@@ -1,8 +1,9 @@
 import json
-from functools import reduce
-
 import sys
 sys.path.append('..')
+
+import redis
+cache = redis.Redis(host='redis', port=6379)
 
 from providers import provider_factory
 
@@ -52,14 +53,15 @@ def search(query_arguments):
     result = False
 
     validate_search_query(query_arguments)
-    cached_data = _get_cache_by_key(query_arguments)
+    cached_data = cache.get(query_arguments['search'])
 
     if cached_data:
         print('Cache hit, return cached data ...')
         result = cached_data
     else:
+        print('Cache miss, fetch data ...')
         result = _call(query_arguments['search'])
-        #TODO SET CACHE
+        cache.set(query_arguments['search'], result)
 
     return result
 
