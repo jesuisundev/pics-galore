@@ -1,8 +1,10 @@
 import json
+from functools import reduce
+
 import sys
 sys.path.append('..')
 
-from providers import flickr, giphy
+from providers import provider_factory
 
 with open('./config/config.json') as f:
     config = json.load(f)
@@ -56,15 +58,15 @@ def search(query_arguments):
         print('Cache hit, return cached data ...')
         result = cached_data
     else:
-        result = _call(config, query_arguments['search'])
+        result = _call(query_arguments['search'])
         #TODO SET CACHE
 
     return result
 
 
-def _call(query, config):
+def _call(query):
     """
-    Go throught each providers and request the content
+    Get each providers available in config throught factory and request the content
 
     Args:
         query (dict): dictonary of params from the request
@@ -76,8 +78,11 @@ def _call(query, config):
     response = []
     preview = ''
 
-    for provider in flickr.Flickr(query, config), giphy.Giphy(query, config):
-        provider_response = provider.request()
+    providerFactory = provider_factory.ProviderFactory()
+    
+    for provider in config['providers']:
+        current_provider = providerFactory.create(provider['name'])
+        provider_response = current_provider.request(config, query)
         response.append(provider_response)
         preview += _preview_html(provider_response)
 
