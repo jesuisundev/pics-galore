@@ -10,6 +10,7 @@ from providers import provider_factory
 with open('./config/config.json') as f:
     config = json.load(f)
 
+
 def validate_search_query(query_arguments):
     """
     Validating the query params of the serch
@@ -24,19 +25,6 @@ def validate_search_query(query_arguments):
         raise ValueError('Query search is not found in query params')
 
     return True
-
-
-def _get_cache_by_key(key):
-    """
-    Try to get the cache of this request on Reids
-
-    Args:
-        key (string): key of the cache
-
-    Returns:
-        [dict|boolean]: content of the cache or false
-    """
-    return False
 
 
 def search(query_arguments):

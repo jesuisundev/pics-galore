@@ -1,6 +1,13 @@
-from pprint import pprint as pp
-
 def build_query_strings(query):
+    """
+    Building the query strings from the configuration
+
+    Args:
+        query ([dict]): dictonary of configuration
+
+    Returns:
+        [string]: querystrings built
+    """
     query_strings = ''
     first = True
 
