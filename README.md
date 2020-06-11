@@ -25,3 +25,11 @@ GIPHY_API_KEY=[YOUR_API_KEY]
 ```
 docker-compose up
 ```
+
+
+# Test
+
+```
+pip install -r requirements.txt
+pytest
+```
