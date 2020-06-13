@@ -1,8 +1,6 @@
 import json
 import requests
 import os
-import sys
-sys.path.append('../modules/')
 
 from modules import helper
 

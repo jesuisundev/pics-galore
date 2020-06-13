@@ -1,9 +1,6 @@
 from flask import Flask, request
 app = Flask(__name__)
 
-import sys
-sys.path.append('controllers/')
-
 from controllers import search
 
 @app.route('/search', methods=['GET'])
