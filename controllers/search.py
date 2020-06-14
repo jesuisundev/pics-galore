@@ -1,7 +1,4 @@
 import json
-import sys
-sys.path.append('..')
-
 import redis
 cache = redis.Redis(host='redis', port=6379)
 
