@@ -1,6 +1,11 @@
+import threading
+import time
 import json
 import redis
 cache = redis.Redis(host='redis', port=6379)
+
+import logging
+logging.basicConfig(format="%(asctime)s: %(message)s", level=logging.INFO, datefmt="%H:%M:%S")
 
 from providers import provider_factory
 
@@ -67,11 +72,15 @@ def _call(query):
 
     providerFactory = provider_factory.ProviderFactory()
     
+    logging.info("Search %s: starting")
+
     for provider in config['providers']:
         current_provider = providerFactory.create(provider['name'])
         provider_response = current_provider.request(config, query)
         response.append(provider_response)
         preview += _preview_html(provider_response)
+
+    logging.info("Search %s: finishing")
 
     return preview
 
