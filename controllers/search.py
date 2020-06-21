@@ -91,6 +91,8 @@ def _preview_html(response):
     """
     preview_html = ''
     for photo in response['photos']:
-        preview_html += '<img src="%s" alt="" />' % photo['original']
+        preview_html += '<a href=%s>' % photo['original']
+        preview_html += '<img src="%s" alt="" />' % photo['thumbnail']
+        preview_html += '</a>'
 
     return preview_html
