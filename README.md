@@ -6,8 +6,12 @@ Provider available:
 
 - Flickr : https://www.flickr.com/services/api/flickr.photos.search.html
 - Giphy : https://developers.giphy.com/docs/
+- Google Images : Crawling
 
-... more to come
+Provider todo:
+
+- Yahoo Images
+- DuckDuckGo Images
 
 # Configuration
 
