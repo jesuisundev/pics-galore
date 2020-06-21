@@ -1,5 +1,6 @@
 from .flickr import Flickr
 from .giphy import Giphy
+from .google import Google
 
 class ProviderFactory:
 

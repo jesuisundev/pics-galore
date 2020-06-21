@@ -15,6 +15,13 @@
             "query": {
                 "rating": "r"
             }
+        },
+        {
+            "name": "google",
+            "base_url": "https://www.google.com/search",
+            "query": {
+                "tbm": "isch"
+            }
         }
     ]
 }
